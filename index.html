@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive To-Do App</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo" id="homeLogo" style="display: flex; align-items: center; cursor: pointer;">
+      <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Tick Logo" class="tick-logo" style="width: 32px; height: 32px; margin-right: 10px;"/>
+      TRACK-IT
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" id="athletes-tab">Athletes</a></li>
+      <li><a href="#" id="routine-tab">Routine Work</a></li>
+      <li><a href="#" id="business-tab">Business / Jobs</a></li>
+      <li><a href="about.html" id="about-tab">About Us</a></li>
+    </ul>
+    <button class="login-btn" id="loginBtn">Login / Signup</button>
+    <div class="user-icon" id="userIcon" style="display: none; position: relative;">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User" id="userIconImg" style="cursor:pointer;"/>
+      <div class="user-dropdown" id="userDropdown" style="display: none;">
+        <button id="changePasswordBtn">Change Password</button>
+        <button id="logoutBtn">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Carousel Section -->
+  <div class="carousel" id="carousel">
+    <div class="carousel-slide active">
+      <h3>Welcome to the Ultimate To-Do App!</h3>
+      <p>Organize your life, boost your productivity, and never miss a task again.</p>
+    </div>
+    <div class="carousel-slide">
+      <h3>Three Powerful Categories</h3>
+      <p>Switch between Athletes, Routine Work, and Business/Jobs to keep your tasks sorted and focused.</p>
+    </div>
+    <div class="carousel-slide">
+      <h3>Easy Login & Signup</h3>
+      <p>Securely manage your tasks with a simple login/signup process. Your productivity, your way!</p>
+    </div>
+    <button class="carousel-btn prev" id="carouselPrev">&#10094;</button>
+    <button class="carousel-btn next" id="carouselNext">&#10095;</button>
+  </div>
+
+  <div class="container">
+    <div id="auth-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2 id="auth-title">Login</h2>
+        <form id="auth-form">
+          <input type="text" id="username" placeholder="Username" required />
+          <input type="password" id="password" placeholder="Password" required />
+          <button type="submit" id="auth-submit">Login</button>
+          <p id="toggle-auth">Don't have an account? <a href="#" id="switchAuth">Sign up</a></p>
+        </form>
+      </div>
+    </div>
+
+    <div id="todo-section" class="todo-section">
+      <h2 id="category-title">Daily Tasks</h2>
+      <form id="todo-form">
+        <input type="text" id="todo-input" placeholder="Add a new task..." required />
+        <select id="todo-priority">
+          <option value="medium" selected>Medium Priority</option>
+          <option value="low">Low Priority</option>
+          <option value="high">High Priority</option>
+        </select>
+        <input type="date" id="todo-date" />
+        <input type="time" id="todo-time" />
+        <button type="submit">Add</button>
+      </form>
+      <ul id="todo-list"></ul>
+    </div>
+  </div>
+
+  <!-- Cards Section -->
+  <div class="cards-section">
+    <div class="card">
+      <img src="https://images.isspf.com/wp-content/uploads/2022/03/21190146/INTERNATIONAL-FOOTBALL-PLAYER-1.webp" alt="Sports" />
+      <h3>Sports</h3>
+      <p>Stay on top of your athletic goals, track your training, and push your limits every day.</p>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=400&q=80" alt="Business" />
+      <h3>Business</h3>
+      <p>Organize your business tasks, meetings, and projects to achieve professional success.</p>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" alt="Daily Life" />
+      <h3>Daily Life</h3>
+      <p>Manage your daily routines, chores, and personal goals for a balanced lifestyle.</p>
+    </div>
+    <!-- Additional Cards -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="Creativity" />
+      <h3>Creativity</h3>
+      <p>Unleash your creative side by tracking ideas, projects, and inspiration in one place.</p>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Learning" />
+      <h3>Learning</h3>
+      <p>Set learning goals, monitor your progress, and celebrate your educational achievements.</p>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80" alt="Wellness" />
+      <h3>Wellness</h3>
+      <p>Keep track of your health, wellness routines, and self-care activities for a happier you.</p>
+    </div>
+  </div>
+  
+  
+  <script src="script.js"></script>
+  <!-- Place the change password modal at the end of body -->
+  <div id="changePasswordModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeChangePasswordModal">&times;</span>
+      <h2>Change Password</h2>
+      <form id="changePasswordForm">
+        <input type="password" id="oldPassword" placeholder="Old Password" required />
+        <input type="password" id="newPassword" placeholder="New Password" required />
+        <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required />
+        <button type="submit">Change Password</button>
+      </form>
+    </div>
+  </div>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>Contact Us</h3>
+        <form id="contactForm" class="contact-form">
+          <input type="text" id="contactName" placeholder="Your Name" required />
+          <input type="email" id="contactEmail" placeholder="Your Email" required />
+          <textarea id="contactMessage" placeholder="Your Message" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+        <div id="contactSuccess" class="contact-success" style="display:none;">Thank you for contacting us!</div>
+      </div>
+      <div class="footer-brand">
+        <p>&copy; 2024 TRACK-IT. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

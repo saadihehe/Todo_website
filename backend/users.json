@@ -1,0 +1,19 @@
+[
+  {
+    "username": "msaad0900@gmail.com",
+    "password": "$2b$10$H2FKd48VeFrYwJ/MIiCjceFYiF.KYIUKhFmnMXoxDMeu3yb5Hbggm",
+    "tasks": [
+      {
+        "text": "saad",
+        "completed": false,
+        "priority": "medium",
+        "dueDate": "2025-05-12",
+        "dueTime": "04:32"
+      }
+    ]
+  },
+  {
+    "username": "tcs@gmail.com",
+    "password": "$2b$10$NlTQdtAQU7lkf.HbJsKo8.d5N/M4z0jO2OSLxR3CVuAdiN6/y4WIq"
+  }
+]
