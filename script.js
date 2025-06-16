@@ -161,6 +161,13 @@ function renderTodos() {
     if (todo.editing) {
       li.innerHTML = `
         <input type="text" id="edit-input-${idx}" value="${todo.text.replace(/"/g, '&quot;')}" style="flex:1; margin-right:0.5rem;" />
+        <select id="edit-priority-${idx}" style="margin-right:0.5rem;">
+          <option value="medium" ${todo.priority === 'medium' ? 'selected' : ''}>Medium Priority</option>
+          <option value="low" ${todo.priority === 'low' ? 'selected' : ''}>Low Priority</option>
+          <option value="high" ${todo.priority === 'high' ? 'selected' : ''}>High Priority</option>
+        </select>
+        <input type="date" id="edit-date-${idx}" value="${todo.dueDate || ''}" style="margin-right:0.5rem;" />
+        <input type="time" id="edit-time-${idx}" value="${todo.dueTime || ''}" style="margin-right:0.5rem;" />
         <button class="save-btn" onclick="saveEdit(${idx})">Save</button>
         <button class="cancel-btn" onclick="cancelEdit(${idx})">Cancel</button>
       `;
@@ -200,15 +207,28 @@ window.editTodo = function(idx) {
 
 window.saveEdit = function(idx) {
   const input = document.getElementById(`edit-input-${idx}`);
+  const priority = document.getElementById(`edit-priority-${idx}`);
+  const date = document.getElementById(`edit-date-${idx}`);
+  const time = document.getElementById(`edit-time-${idx}`);
   if (input) {
     const newText = input.value.trim();
     if (newText) {
       todos[idx].text = newText;
     }
   }
+  if (priority) {
+    todos[idx].priority = priority.value;
+  }
+  if (date) {
+    todos[idx].dueDate = date.value;
+  }
+  if (time) {
+    todos[idx].dueTime = time.value;
+  }
   delete todos[idx].editing;
   saveTodos();
   renderTodos();
+  setAlarm(todos[idx]);
 };
 
 window.cancelEdit = function(idx) {
@@ -230,6 +250,7 @@ todoForm.onsubmit = (e) => {
     document.getElementById('todo-time').value = "";
     saveTodos();
     renderTodos();
+    setAlarm(todos[todos.length - 1]);
   }
 };
 
@@ -422,3 +443,21 @@ if (homeLogo) {
     window.location.href = window.location.pathname;
   };
 }
+
+function setAlarm(task) {
+  if (task.dueTime) {
+    const now = new Date();
+    const [hours, minutes] = task.dueTime.split(':');
+    const dueDate = new Date(now);
+    dueDate.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0);
+    const timeUntilDue = dueDate - now;
+    if (timeUntilDue > 0) {
+      setTimeout(() => {
+        alert(`Task due now: ${task.text}`);
+        const audio = new Audio('sound/funny-alarm-317531.mp3'); // Replace with your sound file path
+        audio.play();
+      }, timeUntilDue);
+    }
+  }
+}
+
