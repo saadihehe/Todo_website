@@ -158,12 +158,21 @@ function renderTodos() {
       if (todo.dueTime) dueString += (dueString ? " " : "") + todo.dueTime;
       dueInfo = `<span class="todo-due">Due: ${dueString}</span>`;
     }
-    li.innerHTML = `
-      <span onclick="toggleComplete(${idx})">${todo.text}</span>
-      ${priorityLabel}
-      ${dueInfo}
-      <button class="delete-btn" onclick="deleteTodo(${idx})">&times;</button>
-    `;
+    if (todo.editing) {
+      li.innerHTML = `
+        <input type="text" id="edit-input-${idx}" value="${todo.text.replace(/"/g, '&quot;')}" style="flex:1; margin-right:0.5rem;" />
+        <button class="save-btn" onclick="saveEdit(${idx})">Save</button>
+        <button class="cancel-btn" onclick="cancelEdit(${idx})">Cancel</button>
+      `;
+    } else {
+      li.innerHTML = `
+        <span onclick="toggleComplete(${idx})">${todo.text}</span>
+        ${priorityLabel}
+        ${dueInfo}
+        <button class="edit-btn" onclick="editTodo(${idx})">Edit</button>
+        <button class="delete-btn" onclick="deleteTodo(${idx})">&times;</button>
+      `;
+    }
     todoList.appendChild(li);
   });
 }
@@ -177,6 +186,33 @@ window.toggleComplete = function(idx) {
 window.deleteTodo = function(idx) {
   todos.splice(idx, 1);
   saveTodos();
+  renderTodos();
+};
+
+window.editTodo = function(idx) {
+  todos[idx].editing = true;
+  renderTodos();
+  setTimeout(() => {
+    const input = document.getElementById(`edit-input-${idx}`);
+    if (input) input.focus();
+  }, 0);
+};
+
+window.saveEdit = function(idx) {
+  const input = document.getElementById(`edit-input-${idx}`);
+  if (input) {
+    const newText = input.value.trim();
+    if (newText) {
+      todos[idx].text = newText;
+    }
+  }
+  delete todos[idx].editing;
+  saveTodos();
+  renderTodos();
+};
+
+window.cancelEdit = function(idx) {
+  delete todos[idx].editing;
   renderTodos();
 };
 
